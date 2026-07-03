@@ -1,0 +1,21 @@
+# 台股開盤預測系統 — Python 相依套件
+yfinance>=0.2.40          # Yahoo Finance 數據（免費）
+requests>=2.31.0          # HTTP 請求
+python-dotenv>=1.0.0      # 讀取 .env 檔
+schedule>=1.2.0           # 定時排程
+
+# AI 後端（擇一安裝即可）
+anthropic>=0.40.0         # Claude
+# openai>=1.35.0          # GPT-4o（擇一啟用）
+# google-generativeai>=0.7.0  # Gemini（擇一啟用）
+
+# Notion 輸出
+# notion-client>=2.2.1    # 官方 SDK（可選，目前用 requests 直接呼叫）
+
+# 可選強化
+# pandas>=2.0.0           # 數據處理
+# ta>=0.11.0              # 技術指標計算
+# matplotlib>=3.8.0       # 本機圖表輸出
+streamlit>=1.30.0         # 前端儀表板
+pythonnet>=3.0.0          # 元大 API .NET 載入器
+psutil>=5.9.0             # 系統進程狀態管理

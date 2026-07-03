@@ -1,0 +1,30 @@
+# Python environment
+.venv/
+venv/
+ENV/
+env/
+ENV.local/
+env.local/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.dll
+*.pfx
+
+# Local Configuration
+.env
+.env.local
+.env.*.local
+
+# Project Generated Files & Dynamic Outputs
+logs/
+outputs/latest_report.json
+outputs/dashboard.html
+*.pdf
+*.log
+
+# OS temporary files
+.DS_Store
+Thumbs.db
