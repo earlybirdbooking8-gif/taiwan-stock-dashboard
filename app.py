@@ -73,27 +73,34 @@ components.html("""
 """, height=0)
 
 # --- Sidebar: API 設定與控制面板 ---
-st.sidebar.header("🔐 元大 API 設定")
-st.sidebar.markdown("請輸入您的元大 API 憑證與帳號密碼。")
+is_windows = sys.platform == "win32"
 
-default_account = os.getenv("YUANTA_ACCOUNT", "")
-default_password = os.getenv("YUANTA_PASSWORD", "")
-default_pfx = os.getenv("YUANTA_PFX_PATH", "")
-default_pfx_pass = os.getenv("YUANTA_PFX_PASSWORD", "")
+if not is_windows:
+    st.sidebar.info("☁️ **雲端展示模式**\n\n資料抓取與模型預測功能需透過元大 API (限 Windows 平台執行)，因此此雲端頁面僅提供**預測結果展示**。\n\n若要產生最新預測，請於您的本機電腦執行更新。")
+    account = password = pfx_path = pfx_pass = ""
+    save_btn = False
+else:
+    st.sidebar.header("🔐 元大 API 設定")
+    st.sidebar.markdown("請輸入您的元大 API 憑證與帳號密碼。")
 
-account = st.sidebar.text_input(
-    "登入帳號 (Account)", 
-    value=default_account, 
-    help="請輸入元大 API 規定的帳號格式。\n- 證券帳號：S + 4碼分公司 + 7碼帳號 (如 S98875005091)\n- 期貨帳號：F + 10碼分公司 + 7碼帳號 (如 FF021000P001234567)\n※請注意：API 登入不支援直接輸入身分證字號。"
-)
-password = st.sidebar.text_input("密碼 (Password)", value=default_password, type="password")
+    default_account = os.getenv("YUANTA_ACCOUNT", "")
+    default_password = os.getenv("YUANTA_PASSWORD", "")
+    default_pfx = os.getenv("YUANTA_PFX_PATH", "")
+    default_pfx_pass = os.getenv("YUANTA_PFX_PASSWORD", "")
 
-st.sidebar.markdown("---")
-st.sidebar.subheader("憑證設定 (PFX)")
-pfx_path = st.sidebar.text_input("憑證檔案路徑", value=default_pfx)
-pfx_pass = st.sidebar.text_input("憑證密碼", value=default_pfx_pass, type="password")
+    account = st.sidebar.text_input(
+        "登入帳號 (Account)", 
+        value=default_account, 
+        help="請輸入元大 API 規定的帳號格式。\n- 證券帳號：S + 4碼分公司 + 7碼帳號 (如 S98875005091)\n- 期貨帳號：F + 10碼分公司 + 7碼帳號 (如 FF021000P001234567)\n※請注意：API 登入不支援直接輸入身分證字號。"
+    )
+    password = st.sidebar.text_input("密碼 (Password)", value=default_password, type="password")
 
-save_btn = st.sidebar.button("💾 儲存設定並測試連線", use_container_width=True)
+    st.sidebar.markdown("---")
+    st.sidebar.subheader("憑證設定 (PFX)")
+    pfx_path = st.sidebar.text_input("憑證檔案路徑", value=default_pfx)
+    pfx_pass = st.sidebar.text_input("憑證密碼", value=default_pfx_pass, type="password")
+
+    save_btn = st.sidebar.button("💾 儲存設定並測試連線", use_container_width=True)
 
 # --- Sidebar: 台股開盤預測儀表板 系統控制面板 ---
 st.sidebar.markdown("---")
@@ -101,7 +108,7 @@ st.sidebar.header("📊 台股開盤預測儀表板")
 st.sidebar.subheader("⚙️ 系統控制面板")
 
 # 檢查背景子進程狀態 (絕對路徑)
-status_file = r"D:\☆股票\台股開盤預測儀表板\outputs\predict_status.json"
+status_file = os.path.join(ROOT, "outputs", "predict_status.json")
 status_data = None
 if os.path.exists(status_file):
     try:
@@ -141,7 +148,7 @@ if "last_processed_time" not in st.session_state:
     st.session_state.last_processed_time = None
 
 # --- 自動背景過期檢查與刷新 ---
-html_file_path = r"D:\☆股票\台股開盤預測儀表板\outputs\dashboard.html"
+html_file_path = os.path.join(ROOT, "outputs", "dashboard.html")
 auto_update_interval = 300  # 5分鐘
 
 should_auto_trigger = False
@@ -153,7 +160,7 @@ if os.path.exists(html_file_path):
 else:
     should_auto_trigger = True
 
-if should_auto_trigger and not is_running:
+if is_windows and should_auto_trigger and not is_running:
     env = os.environ.copy()
     env["YUANTA_ACCOUNT"] = account
     env["YUANTA_PASSWORD"] = password
@@ -166,11 +173,11 @@ if should_auto_trigger and not is_running:
         if os.name == "nt":
             creation_flags = subprocess.CREATE_NO_WINDOW
         
-        python_exe = r"D:\☆股票\台股開盤預測儀表板\.venv\Scripts\python.exe"
+        python_exe = sys.executable
         subprocess.Popen(
             [python_exe, "pipeline/run.py"],
             env=env,
-            cwd=r"D:\☆股票\台股開盤預測儀表板",
+            cwd=ROOT,
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
             stdin=subprocess.DEVNULL,
@@ -182,7 +189,7 @@ if should_auto_trigger and not is_running:
         pass
 
 # 1. 抓取最新夜盤報價按鈕
-if st.sidebar.button("🔄 抓取最新 TXFPM1 報價", use_container_width=True):
+if is_windows and st.sidebar.button("🔄 抓取最新 TXFPM1 報價", use_container_width=True):
     with st.sidebar.spinner("連線至元大 API 中..."):
         import subprocess
         env = os.environ.copy()
@@ -217,10 +224,10 @@ if st.sidebar.button("🔄 抓取最新 TXFPM1 報價", use_container_width=True
             st.sidebar.error(f"執行錯誤: {e}")
 
 # 2. 執行預測與重新整理按鈕
-if is_running:
+if is_windows and is_running:
     if st.sidebar.button("🔄 重新整理檢測狀態", use_container_width=True):
         st.rerun()
-else:
+elif is_windows:
     if st.sidebar.button("🚀 執行完整預測流程", use_container_width=True):
         env = os.environ.copy()
         env["YUANTA_ACCOUNT"] = account
@@ -234,11 +241,11 @@ else:
             if os.name == "nt":
                 creation_flags = subprocess.CREATE_NO_WINDOW
             
-            python_exe = r"D:\☆股票\台股開盤預測儀表板\.venv\Scripts\python.exe"
+            python_exe = sys.executable
             subprocess.Popen(
                 [python_exe, "pipeline/run.py"],
                 env=env,
-                cwd=r"D:\☆股票\台股開盤預測儀表板",
+                cwd=ROOT,
                 stdout=subprocess.DEVNULL,
                 stderr=subprocess.DEVNULL,
                 stdin=subprocess.DEVNULL,
@@ -252,10 +259,9 @@ else:
             st.sidebar.error(f"無法啟動預測子進程: {e}")
 
 # 狀態提示與結果處理
-if is_running:
+if is_windows and is_running:
     st.sidebar.info("⏳ 預測流程執行中，請稍候... (此過程為非同步背景執行，網頁不會卡死)")
-else:
-    if status_data:
+elif is_windows and status_data:
         status_val = status_data.get("status")
         task_time = status_data.get("end_time") or status_data.get("error") or "error_fallback"
         
@@ -283,7 +289,7 @@ else:
                         pass
 
 # --- 📊 預測儀表板 (直接滿版嵌入產出的 HTML) ---
-html_path = r"D:\☆股票\台股開盤預測儀表板\outputs\dashboard.html"
+html_path = os.path.join(ROOT, "outputs", "dashboard.html")
 
 if os.path.exists(html_path):
     try:

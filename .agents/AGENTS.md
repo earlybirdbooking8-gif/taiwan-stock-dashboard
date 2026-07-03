@@ -1,16 +1,23 @@
 # Project Rules
 
-## Git Workflow & Development Rules
-- 每完成一項功能，必須執行以下流程：
-  1. 執行測試
-  2. 修正所有錯誤
-  3. `git add .`
-  4. 撰寫有意義的 Commit Message
-  5. `git commit`
-  6. `git push origin main`
-- 未測試成功不得 Push。
-- 任何程式修改都必須先修改本地專案，通過測試，自動 Commit 並 Push 到 GitHub。
-- GitHub Repository 為唯一正式版本（Single Source of Truth）。
+## CI/CD 自動化發布流程 (Deployment Pipeline)
+完成每項功能後，必須依照以下 6 個步驟自動執行：
+
+【第一步：執行測試】
+- 執行所有本地測試。
+- 若測試失敗：修正錯誤 -> 重新測試 -> 測試全部通過才能繼續。
+
+【第二步：同步 GitHub】
+- `git add .`
+- 撰寫有意義的 Commit Message (遵循下方規範)
+- `git commit`
+- `git push origin main`
+
+【第三步：驗證部署 (Streamlit Community Cloud)】
+- 由於專案已綁定 Streamlit Community Cloud，只要 GitHub Push 成功，遠端伺服器將會自動拉取最新程式碼並重啟部署。
+- 開啟 Streamlit 應用程式專屬網址，確認新功能已成功上線且運作正常。
+
+- **核心原則**：GitHub Repository 為唯一正式版本（Single Source of Truth）。未測試成功不得 Push。專案採用 GitOps 流程，任何修改推播至 GitHub main 分支後，即視為完成自動化發布。
 
 ## Commit Message 規範
 遵循 Conventional Commits 規範：

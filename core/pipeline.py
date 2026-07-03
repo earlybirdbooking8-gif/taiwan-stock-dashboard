@@ -26,8 +26,9 @@ log = logging.getLogger("pipeline")
 
 def run_pipeline() -> dict:
     """執行完整流程：CEO Agent 調度任務鏈 (派工) -> Notion -> Dashboard"""
-    status_file = r"D:\☆股票\台股開盤預測儀表板\outputs\predict_status.json"
-    os.makedirs(r"D:\☆股票\台股開盤預測儀表板\outputs", exist_ok=True)
+    ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    status_file = os.path.join(ROOT, "outputs", "predict_status.json")
+    os.makedirs(os.path.join(ROOT, "outputs"), exist_ok=True)
     with open(status_file, "w", encoding="utf-8") as sf:
         json.dump({"status": "running", "pid": os.getpid(), "start_time": datetime.now().isoformat()}, sf, ensure_ascii=False)
 

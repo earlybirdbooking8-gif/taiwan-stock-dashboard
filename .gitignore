@@ -21,7 +21,7 @@ __pycache__/
 # Project Generated Files & Dynamic Outputs
 logs/
 outputs/latest_report.json
-outputs/dashboard.html
+# outputs/dashboard.html (Removed to allow syncing to Streamlit Cloud)
 *.pdf
 *.log
 
