@@ -86,10 +86,10 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
                 else:
                     val_str = f"{formatted_val}"
             
-            sub_str = f"<div style='font-size: 10px; color: var(--text-secondary); margin-top: 4px;'>最後更新: {today} | {status}</div>"
+            sub_str = f"<div class='c-date'>最後更新: {today} | {status}</div>"
         else:
-            val_str = "<span style='font-size:13px; color:#ef4444; font-weight:700;'>目前無法取得資料</span>"
-            sub_str = f"<div style='font-size:9.5px; color:#ef4444; line-height:1.3; margin-top:4px;'>原因: API 連線限制或請求超時<br>最後嘗試: {today} | {status}</div>"
+            val_str = "<span class='c-error'>目前無法取得資料</span>"
+            sub_str = f"<div class='c-date c-error-text'>原因: API 連線限制或請求超時<br>最後嘗試: {today} | {status}</div>"
             
         tooltip = f"指標名稱：{name}&#10;資料來源：{source}&#10;"
         if api_name:
@@ -118,10 +118,10 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     usd_trend_status = "已同步" if usd.get('price') is not None else "同步失敗"
     if usd.get('price') is not None:
         usd_trend_val_str = "站上 20MA (趨勢貶)" if usd_trend_val else "低於 20MA (趨勢升)"
-        usd_trend_sub_str = f"<div style='font-size: 10px; color: var(--text-secondary); margin-top: 4px;'>最後更新: {today} | 已同步</div>"
+        usd_trend_sub_str = f"<div class='c-date'>最後更新: {today} | 已同步</div>"
     else:
-        usd_trend_val_str = "<span style='font-size:13px; color:#ef4444; font-weight:700;'>目前無法取得資料</span>"
-        usd_trend_sub_str = f"<div style='font-size:9.5px; color:#ef4444; line-height:1.3; margin-top:4px;'>原因: API 連線限制或請求超時<br>最後嘗試: {today} | {usd_trend_status}</div>"
+        usd_trend_val_str = "<span class='c-error'>目前無法取得資料</span>"
+        usd_trend_sub_str = f"<div class='c-date c-error-text'>原因: API 連線限制或請求超時<br>最後嘗試: {today} | {usd_trend_status}</div>"
         
     usd_trend_tip = f"指標名稱：美元匯率均線趨勢&#10;資料來源：Yahoo Finance 國際市場&#10;API 名稱：yfinance (TWD=X)&#10;更新時間：{ts}&#10;同步狀態：{usd_trend_status}"
     if usd.get('price') is None:
@@ -208,6 +208,9 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     --icon-bg: #e0e7ff;
     --icon-color: #4f46e5;
     --track-bg: #f1f5f9;
+    --fluid-gap: clamp(1rem, 2vw, 1.5rem);
+    --card-p: clamp(1.25rem, 2.5vw, 1.75rem);
+    --icon-sz: clamp(2.5rem, 4vw, 3.5rem);
   }}
   body[data-theme="dark"] {{
     --bg-dark: #0c101b;
@@ -261,7 +264,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     justify-content: center;
   }}
   .container {{
-    max-width: 960px;
+    max-width: 1400px;
     width: 100%;
   }}
   header {{
@@ -301,52 +304,50 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
   }}
   .hero {{
     display: grid;
-    grid-template-columns: 1.4fr 1fr 1.2fr 1.2fr 1fr;
-    gap: 16px;
-    margin-bottom: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(clamp(200px, 15vw, 250px), 1fr));
+    gap: var(--fluid-gap);
+    margin-bottom: var(--fluid-gap);
   }}
   .hero-card {{
     background: var(--card-bg);
     border: 1px solid var(--border-glow);
-    border-radius: 20px;
-    padding: 24px;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s ease;
+    border-radius: clamp(12px, 2vw, 20px);
+    padding: var(--card-p);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
   }}
-  .hero-card:hover {{
-    transform: translateY(-3px);
-    border-color: #cbd5e1;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  .hero-card.main {{
+    background: linear-gradient(135deg, var(--card-bg), rgba(79, 70, 229, 0.03));
+    border: 1px solid rgba(79, 70, 229, 0.2);
+    grid-column: 1 / -1;
   }}
   .hc-label {{
-    font-size: 12px;
-    font-weight: 600;
+    font-size: clamp(0.85rem, 1vw, 1.1rem);
+    font-weight: 700;
     color: var(--text-secondary);
     letter-spacing: .08em;
-    text-transform: uppercase;
-    margin-bottom: 12px;
+    margin-bottom: clamp(0.5rem, 1vw, 1rem);
   }}
   .hc-val {{
-    font-size: 28px;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
     font-weight: 800;
-    line-height: 1.2;
-    margin-bottom: 8px;
-    color: var(--text-primary);
   }}
   .dir-up {{ color: var(--up-color) !important; }}
   .dir-down {{ color: var(--down-color) !important; }}
   .dir-flat {{ color: var(--flat-color) !important; }}
   
   .hc-sub {{
-    font-size: 12px;
+    margin-top: auto;
+    font-size: clamp(0.75rem, 0.9vw, 1rem);
     color: var(--text-secondary);
-    font-family: 'JetBrains Mono', monospace;
-    background: var(--track-bg);
-    padding: 4px 10px;
-    border-radius: 8px;
-    display: inline-block;
+    padding-top: clamp(0.5rem, 1vw, 1rem);
+    border-top: 1px solid var(--border-glow);
+    width: 100%;
   }}
   .conf-wrap {{
     display: flex;
@@ -361,62 +362,113 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
   .conf-circle-fill {{
     animation: draw 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   }}
-  .grid3 {{
+  .metrics-grid {{
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-bottom: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(clamp(260px, 25vw, 320px), 1fr));
+    gap: var(--fluid-gap);
+    margin-bottom: var(--fluid-gap);
   }}
   .card {{
     background: var(--card-bg);
     border: 1px solid var(--border-glow);
-    border-radius: 16px;
-    padding: 20px;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+    border-radius: clamp(12px, 2vw, 20px);
+    padding: var(--card-p);
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 16px;
+    justify-content: flex-start;
+    text-align: center;
+    height: 100%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
   }}
   .card:hover {{
-    transform: translateY(-3px);
-    border-color: #cbd5e1;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
   }}
   .c-icon {{
+    width: var(--icon-sz);
+    aspect-ratio: 1;
+    background: var(--icon-bg);
+    color: var(--icon-color);
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    background: var(--icon-bg);
-    color: var(--icon-color);
+    margin-bottom: clamp(1rem, 1.5vw, 1.25rem);
     flex-shrink: 0;
+  }}
+  .c-icon svg {{
+    width: 50%;
+    height: 50%;
   }}
   .c-info {{
     display: flex;
     flex-direction: column;
+    align-items: center;
+    width: 100%;
     flex-grow: 1;
   }}
   .c-label {{
-    font-size: 13px;
+    font-size: clamp(0.85rem, 1vw, 1.1rem);
     font-weight: 600;
     color: var(--text-secondary);
-    margin-bottom: 6px;
-    letter-spacing: .02em;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
   }}
   .c-val {{
-    font-size: 18px;
+    font-size: clamp(1.5rem, 2.5vw, 2.2rem);
     font-weight: 700;
     font-family: 'JetBrains Mono', monospace;
     color: var(--text-primary);
+    margin-bottom: 0.25rem;
   }}
   .c-chg {{
-    font-size: 12px;
-    margin-top: 4px;
+    font-size: clamp(0.85rem, 1vw, 1.1rem);
     font-weight: 600;
     font-family: 'JetBrains Mono', monospace;
+    margin-bottom: clamp(1rem, 1.5vw, 1.5rem);
+  }}
+  .c-date {{
+    margin-top: auto;
+    width: 100%;
+    font-size: clamp(0.7rem, 0.85vw, 0.9rem);
+    color: var(--text-secondary);
+    padding-top: clamp(0.5rem, 1vw, 1rem);
+    border-top: 1px solid var(--border-glow);
+  }}
+  .c-error {{
+    font-size: clamp(0.85rem, 1vw, 1.1rem);
+    color: #ef4444;
+    font-weight: 700;
+  }}
+  .c-error-text {{
+    color: #ef4444;
+  }}
+  .night-banner {{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(168, 85, 247, 0.08));
+    border: 1px solid rgba(99, 102, 241, 0.25);
+    border-radius: clamp(12px, 2vw, 20px);
+    padding: clamp(1.2rem, 2vw, 2rem);
+    margin-bottom: var(--fluid-gap);
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.02);
+    transition: transform 0.2s;
+  }}
+  .night-banner:hover {{
+    transform: translateY(-2px);
+  }}
+  @media(max-width: 600px) {{
+    .night-banner {{
+      flex-direction: column;
+      text-align: center;
+      gap: 1rem;
+    }}
   }}
   .pos {{ color: var(--up-color); }}
   .neg {{ color: var(--down-color); }}
@@ -499,9 +551,9 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
   
   .factors {{
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-bottom: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(clamp(260px, 25vw, 320px), 1fr));
+    gap: var(--fluid-gap);
+    margin-bottom: var(--fluid-gap);
   }}
   .factor-box {{
     background: var(--card-bg);
@@ -762,20 +814,20 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
       <div class="hc-val {dir_cls}">{dir_arrow} {open_pred}</div>
       <div class="hc-sub">預測區間<br>{pt_low:+d} ～ {pt_high:+d} 點區間</div>
     </div>
-    <div class="hero-card">
+    <div class="hero-card main">
       <div class="hc-label">趨勢結構</div>
-      <div class="hc-val" style="font-size:26px;color:var(--text-primary);margin-top:8px">{sentiment}</div>
-      <div class="hc-sub" style="margin-top:12px">{today}</div>
+      <div class="hc-val" style="color:var(--text-primary);">{sentiment}</div>
+      <div class="hc-sub">{today}</div>
     </div>
     <div class="hero-card">
       <div class="hc-label">盤勢強度</div>
-      <div class="hc-val" style="font-size:24px;color:{strat_col};margin-top:8px;font-weight:800;">{strategy}</div>
-      <div class="hc-sub" style="margin-top:12px">多空分數<br>{total_score}/100</div>
+      <div class="hc-val" style="color:{strat_col};">{strategy}</div>
+      <div class="hc-sub">多空分數<br>{total_score}/100</div>
     </div>
     <div class="hero-card">
       <div class="hc-label">盤中波動率</div>
-      <div class="hc-val" style="font-size:24px;color:{cont_col};margin-top:8px;font-weight:800;">{continuation}</div>
-      <div class="hc-sub" style="margin-top:12px">預期波動<br>{vol_text}</div>
+      <div class="hc-val" style="color:{cont_col};">{continuation}</div>
+      <div class="hc-sub">預期波動<br>{vol_text}</div>
     </div>
     <div class="hero-card conf-wrap" style="cursor: pointer;" onclick="openConfidenceModal()">
       <div class="hc-label" style="align-self: flex-start;">分析信心分數</div>
@@ -794,22 +846,22 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
   </div>
 
   <!-- Night Futures Banner -->
-  <div class="card" style="margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(168, 85, 247, 0.08)); border: 1px solid rgba(99, 102, 241, 0.25); box-shadow: 0 4px 15px rgba(99, 102, 241, 0.02); padding: 18px 24px; cursor: pointer;" onclick="window.open('https://www.wantgoo.com/futures/wtxp&', '_blank')" title="{txf_tip}">
+  <div class="night-banner" onclick="window.open('https://www.wantgoo.com/futures/wtxp&', '_blank')" title="{txf_tip}">
     <div>
-      <div class="c-label" style="color: #4f46e5; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;">台指期盤後收盤 (TXFPM1)</div>
-      <div class="c-val" style="font-size: 26px; margin-top: 6px;">{txf_val}</div>
+      <div class="c-label" style="color: #4f46e5; letter-spacing: .08em; text-transform: uppercase;">台指期盤後收盤 (TXFPM1)</div>
+      <div class="c-val">{txf_val}</div>
       {txf_sub}
     </div>
     <div style="text-align: right;">
       <div class="c-label" style="letter-spacing: .08em;">漲跌幅度</div>
-      <div class="c-chg" style="font-size: 18px; margin-top: 6px;">{chg(txf_pm)}</div>
+      <div class="c-chg">{chg(txf_pm)}</div>
     </div>
   </div>
 
   <!-- Market Data Grid -->
-  <div class="grid3">
+  <div class="metrics-grid">
     <!-- TSM -->
-    <div class="card" style="cursor: pointer;" onclick="window.open('https://finance.yahoo.com/quote/TSM', '_blank')" title="{adr_tip}">
+    <div class="card" onclick="window.open('https://finance.yahoo.com/quote/TSM', '_blank')" title="{adr_tip}">
       <div class="c-icon">
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="10"/>
@@ -826,7 +878,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     </div>
     
     <!-- SOX -->
-    <div class="card" style="cursor: pointer;" onclick="window.open('https://finance.yahoo.com/quote/%5ESOX', '_blank')" title="{sox_tip}">
+    <div class="card" onclick="window.open('https://finance.yahoo.com/quote/%5ESOX', '_blank')" title="{sox_tip}">
       <div class="c-icon">
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="4" y="4" width="16" height="16" rx="2"/>
@@ -842,7 +894,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     </div>
     
     <!-- NQ -->
-    <div class="card" style="cursor: pointer;" onclick="window.open('https://finance.yahoo.com/quote/%5EIXIC', '_blank')" title="{nq_tip}">
+    <div class="card" onclick="window.open('https://finance.yahoo.com/quote/%5EIXIC', '_blank')" title="{nq_tip}">
       <div class="c-icon">
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
@@ -857,7 +909,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     </div>
     
     <!-- 外資現貨買賣超 -->
-    <div class="card" style="cursor: pointer;" onclick="window.open('https://www.wantgoo.com/stock/institutional-investors/three-trade-for-trading-amount', '_blank')" title="{foreign_tip}">
+    <div class="card" onclick="window.open('https://www.wantgoo.com/stock/institutional-investors/three-trade-for-trading-amount', '_blank')" title="{foreign_tip}">
       <div class="c-icon">
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
@@ -872,7 +924,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     </div>
     
     <!-- 投信現貨買賣超 -->
-    <div class="card" style="cursor: pointer;" onclick="window.open('https://www.wantgoo.com/stock/institutional-investors/three-trade-for-trading-amount', '_blank')" title="{trust_tip}">
+    <div class="card" onclick="window.open('https://www.wantgoo.com/stock/institutional-investors/three-trade-for-trading-amount', '_blank')" title="{trust_tip}">
       <div class="c-icon">
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
@@ -887,7 +939,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     </div>
     
     <!-- 自營商買賣超 -->
-    <div class="card" style="cursor: pointer;" onclick="window.open('https://www.wantgoo.com/stock/institutional-investors/three-trade-for-trading-amount', '_blank')" title="{dealer_tip}">
+    <div class="card" onclick="window.open('https://www.wantgoo.com/stock/institutional-investors/three-trade-for-trading-amount', '_blank')" title="{dealer_tip}">
       <div class="c-icon">
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/>
@@ -902,7 +954,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     </div>
     
     <!-- 融資餘額增減 -->
-    <div class="card" style="cursor: pointer;" onclick="window.open('https://www.wantgoo.com/stock/margin-trading/market-price/taiex', '_blank')" title="{margin_tip}">
+    <div class="card" onclick="window.open('https://www.wantgoo.com/stock/margin-trading/market-price/taiex', '_blank')" title="{margin_tip}">
       <div class="c-icon">
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
@@ -917,7 +969,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     </div>
     
     <!-- 黃金期貨 -->
-    <div class="card" style="cursor: pointer;" onclick="window.open('https://finance.yahoo.com/quote/GC=F', '_blank')" title="{gold_tip}">
+    <div class="card" onclick="window.open('https://finance.yahoo.com/quote/GC=F', '_blank')" title="{gold_tip}">
       <div class="c-icon">
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
@@ -932,7 +984,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     </div>
     
     <!-- 美原油期貨 -->
-    <div class="card" style="cursor: pointer;" onclick="window.open('https://finance.yahoo.com/quote/CL=F', '_blank')" title="{crude_tip}">
+    <div class="card" onclick="window.open('https://finance.yahoo.com/quote/CL=F', '_blank')" title="{crude_tip}">
       <div class="c-icon">
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/>
@@ -947,7 +999,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     </div>
     
     <!-- VIX 恐慌指數 -->
-    <div class="card" style="cursor: pointer;" onclick="window.open('https://finance.yahoo.com/quote/%5EVIX', '_blank')" title="{vix_tip}">
+    <div class="card" onclick="window.open('https://finance.yahoo.com/quote/%5EVIX', '_blank')" title="{vix_tip}">
       <div class="c-icon">
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
@@ -962,7 +1014,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     </div>
     
     <!-- USD/TWD 匯率 -->
-    <div class="card" style="cursor: pointer;" onclick="window.open('https://finance.yahoo.com/quote/TWD=X', '_blank')" title="{usd_tip}">
+    <div class="card" onclick="window.open('https://finance.yahoo.com/quote/TWD=X', '_blank')" title="{usd_tip}">
       <div class="c-icon">
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M17 1l4 4-4 4"/><path d="M3 5h18M7 23l-4-4 4-4"/><path d="M21 19H3"/>
@@ -977,7 +1029,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     </div>
     
     <!-- 美 10Y 債殖利率 -->
-    <div class="card" style="cursor: pointer;" onclick="window.open('https://finance.yahoo.com/quote/%5ETNX', '_blank')" title="{tnx_tip}">
+    <div class="card" onclick="window.open('https://finance.yahoo.com/quote/%5ETNX', '_blank')" title="{tnx_tip}">
       <div class="c-icon">
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="7.5" cy="7.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/><line x1="21" y1="3" x2="3" y2="21"/>
@@ -992,7 +1044,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     </div>
     
     <!-- 美元匯率均線趨勢 -->
-    <div class="card" style="cursor: pointer;" onclick="window.open('https://finance.yahoo.com/quote/TWD=X', '_blank')" title="{usd_trend_tip}">
+    <div class="card" onclick="window.open('https://finance.yahoo.com/quote/TWD=X', '_blank')" title="{usd_trend_tip}">
       <div class="c-icon">
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
@@ -1011,7 +1063,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     </div>
     
     <!-- 外資台指期未平倉口數 -->
-    <div class="card" style="cursor: pointer;" onclick="window.open('https://www.taifex.com.tw/cht/3/callsAndPutsDate', '_blank')" title="{oi_foreign_tip}">
+    <div class="card" onclick="window.open('https://www.taifex.com.tw/cht/3/callsAndPutsDate', '_blank')" title="{oi_foreign_tip}">
       <div class="c-icon">
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="8" r="4"/><path d="M18 21v-2a4 4 0 0 0-4-4H10a4 4 0 0 0-4 4v2"/>
@@ -1025,7 +1077,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     </div>
     
     <!-- 台股期貨未平倉(口) -->
-    <div class="card" style="cursor: pointer;" onclick="window.open('https://www.wantgoo.com/stock/institutional-investors/three-trade-for-trading-amount', '_blank')" title="{oi_total_tip}">
+    <div class="card" onclick="window.open('https://www.wantgoo.com/stock/institutional-investors/three-trade-for-trading-amount', '_blank')" title="{oi_total_tip}">
       <div class="c-icon">
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
