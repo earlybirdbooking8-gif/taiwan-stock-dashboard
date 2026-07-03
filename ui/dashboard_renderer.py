@@ -825,7 +825,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
       </div>
       <span class="ts">更新時間：{ts} (基於 {provider} 分析)</span>
       <button class="btn-pdf" onclick="downloadPDF()">
-        <svg style="width: 14px; height: 14px; fill: currentColor;" viewBox="0 0 24 24">
+        <svg xmlns="http://www.w3.org/2000/svg" style="width: 14px; height: 14px; fill: currentColor;" viewBox="0 0 24 24">
           <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
         </svg>
         下載 PDF
@@ -857,7 +857,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     </div>
     <div class="hero-card conf-wrap" style="cursor: pointer;" onclick="openConfidenceModal()">
       <div class="hc-label" style="align-self: flex-start;">分析信心分數</div>
-      <svg width="110" height="110" viewBox="0 0 120 120" style="margin:5px auto;display:block">
+      <svg xmlns="http://www.w3.org/2000/svg" width="110" height="110" viewBox="0 0 120 120" style="margin:5px auto;display:block">
         <circle cx="60" cy="60" r="54" fill="none" stroke="rgba(79, 70, 229, 0.06)" stroke-width="8"/>
         <circle class="conf-circle-fill" cx="60" cy="60" r="54" fill="none"
           stroke="#4f46e5"
@@ -889,7 +889,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     <!-- TSM -->
     <div class="card" onclick="window.open('https://finance.yahoo.com/quote/TSM', '_blank')" title="{adr_tip}">
       <div class="c-icon">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="10"/>
           <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
           <path d="M2 12h20"/>
@@ -906,7 +906,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     <!-- SOX -->
     <div class="card" onclick="window.open('https://finance.yahoo.com/quote/%5ESOX', '_blank')" title="{sox_tip}">
       <div class="c-icon">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="4" y="4" width="16" height="16" rx="2"/>
           <path d="M9 9h6v6H9zM9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 15h3M1 9h3M1 15h3"/>
         </svg>
@@ -922,7 +922,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     <!-- NQ -->
     <div class="card" onclick="window.open('https://finance.yahoo.com/quote/%5EIXIC', '_blank')" title="{nq_tip}">
       <div class="c-icon">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
         </svg>
       </div>
@@ -937,7 +937,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     <!-- 外資現貨買賣超 -->
     <div class="card" onclick="window.open('https://www.wantgoo.com/stock/institutional-investors/three-trade-for-trading-amount', '_blank')" title="{foreign_tip}">
       <div class="c-icon">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
         </svg>
       </div>
@@ -952,7 +952,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     <!-- 投信現貨買賣超 -->
     <div class="card" onclick="window.open('https://www.wantgoo.com/stock/institutional-investors/three-trade-for-trading-amount', '_blank')" title="{trust_tip}">
       <div class="c-icon">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
         </svg>
       </div>
@@ -967,7 +967,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     <!-- 自營商買賣超 -->
     <div class="card" onclick="window.open('https://www.wantgoo.com/stock/institutional-investors/three-trade-for-trading-amount', '_blank')" title="{dealer_tip}">
       <div class="c-icon">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/>
         </svg>
       </div>
@@ -982,7 +982,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     <!-- 融資餘額增減 -->
     <div class="card" onclick="window.open('https://www.wantgoo.com/stock/margin-trading/market-price/taiex', '_blank')" title="{margin_tip}">
       <div class="c-icon">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
         </svg>
       </div>
@@ -997,7 +997,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     <!-- 黃金期貨 -->
     <div class="card" onclick="window.open('https://finance.yahoo.com/quote/GC=F', '_blank')" title="{gold_tip}">
       <div class="c-icon">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
         </svg>
       </div>
@@ -1012,7 +1012,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     <!-- 美原油期貨 -->
     <div class="card" onclick="window.open('https://finance.yahoo.com/quote/CL=F', '_blank')" title="{crude_tip}">
       <div class="c-icon">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/>
         </svg>
       </div>
@@ -1027,7 +1027,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     <!-- VIX 恐慌指數 -->
     <div class="card" onclick="window.open('https://finance.yahoo.com/quote/%5EVIX', '_blank')" title="{vix_tip}">
       <div class="c-icon">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
         </svg>
       </div>
@@ -1042,7 +1042,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     <!-- USD/TWD 匯率 -->
     <div class="card" onclick="window.open('https://finance.yahoo.com/quote/TWD=X', '_blank')" title="{usd_tip}">
       <div class="c-icon">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M17 1l4 4-4 4"/><path d="M3 5h18M7 23l-4-4 4-4"/><path d="M21 19H3"/>
         </svg>
       </div>
@@ -1057,7 +1057,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     <!-- 美 10Y 債殖利率 -->
     <div class="card" onclick="window.open('https://finance.yahoo.com/quote/%5ETNX', '_blank')" title="{tnx_tip}">
       <div class="c-icon">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="7.5" cy="7.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/><line x1="21" y1="3" x2="3" y2="21"/>
         </svg>
       </div>
@@ -1072,7 +1072,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     <!-- 美元匯率均線趨勢 -->
     <div class="card" onclick="window.open('https://finance.yahoo.com/quote/TWD=X', '_blank')" title="{usd_trend_tip}">
       <div class="c-icon">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
         </svg>
       </div>
@@ -1091,7 +1091,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     <!-- 外資台指期未平倉口數 -->
     <div class="card" onclick="window.open('https://www.taifex.com.tw/cht/3/callsAndPutsDate', '_blank')" title="{oi_foreign_tip}">
       <div class="c-icon">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="8" r="4"/><path d="M18 21v-2a4 4 0 0 0-4-4H10a4 4 0 0 0-4 4v2"/>
         </svg>
       </div>
@@ -1105,7 +1105,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     <!-- 台股期貨未平倉(口) -->
     <div class="card" onclick="window.open('https://www.wantgoo.com/stock/institutional-investors/three-trade-for-trading-amount', '_blank')" title="{oi_total_tip}">
       <div class="c-icon">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
         </svg>
       </div>
