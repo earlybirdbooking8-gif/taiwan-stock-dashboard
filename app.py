@@ -29,8 +29,8 @@ st.markdown("""
         iframe {
             border-radius: 12px;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            height: 3800px !important;
-            min-height: 3800px !important;
+            height: auto !important;
+            min-height: 100vh !important;
         }
     </style>
 """, unsafe_allow_html=True)
@@ -298,7 +298,7 @@ if os.path.exists(html_path):
         
         # 透過在 HTML 末端附加時間戳記註解來破除 Streamlit 內置快取，強迫重新渲染
         html_content += f"\n<!-- cache_breaker: {datetime.now().timestamp()} -->"
-        components.html(html_content, height=3800, scrolling=True)
+        components.html(html_content, height=5200, scrolling=True)
     except Exception as e:
         st.error(f"無法渲染儀表板 HTML: {e}")
 else:

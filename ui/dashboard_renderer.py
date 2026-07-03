@@ -255,6 +255,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     --track-bg: #222222;
   }}
   body {{
+    overflow-x: hidden;
     font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     background: var(--bg-dark);
     color: var(--text-primary);
@@ -264,6 +265,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     justify-content: center;
   }}
   .container {{
+    overflow-x: hidden;
     max-width: 1400px;
     width: 100%;
   }}
@@ -304,7 +306,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
   }}
   .hero {{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(clamp(200px, 15vw, 250px), 1fr));
+    grid-template-columns: 1fr;
     gap: var(--fluid-gap);
     margin-bottom: var(--fluid-gap);
   }}
@@ -364,7 +366,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
   }}
   .metrics-grid {{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(clamp(260px, 25vw, 320px), 1fr));
+    grid-template-columns: 1fr;
     gap: var(--fluid-gap);
     margin-bottom: var(--fluid-gap);
   }}
@@ -372,13 +374,14 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     background: var(--card-bg);
     border: 1px solid var(--border-glow);
     border-radius: clamp(12px, 2vw, 20px);
-    padding: var(--card-p);
+    padding: clamp(12px, 3vw, 16px);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     text-align: center;
     height: 100%;
+    min-height: 220px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
     transition: transform 0.2s, box-shadow 0.2s;
     cursor: pointer;
@@ -454,7 +457,8 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(168, 85, 247, 0.08));
     border: 1px solid rgba(99, 102, 241, 0.25);
     border-radius: clamp(12px, 2vw, 20px);
-    padding: clamp(1.2rem, 2vw, 2rem);
+    padding: clamp(12px, 3vw, 16px);
+    min-height: 220px;
     margin-bottom: var(--fluid-gap);
     cursor: pointer;
     box-shadow: 0 4px 15px rgba(99, 102, 241, 0.02);
@@ -551,7 +555,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
   
   .factors {{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(clamp(260px, 25vw, 320px), 1fr));
+    grid-template-columns: 1fr;
     gap: var(--fluid-gap);
     margin-bottom: var(--fluid-gap);
   }}
@@ -782,6 +786,33 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     flex-wrap: wrap;
     gap: 12px;
   }}
+
+  /* --- Mobile First Media Queries --- */
+  @media(min-width: 769px) {{
+    .metrics-grid, .factors {{
+      grid-template-columns: repeat(2, 1fr);
+    }}
+    .hero {{
+      grid-template-columns: repeat(2, 1fr);
+    }}
+    .card, .hero-card, .night-banner {{
+      min-height: auto;
+      padding: var(--card-p);
+    }}
+  }}
+
+  @media(min-width: 1025px) {{
+    .metrics-grid {{
+      grid-template-columns: repeat(auto-fit, minmax(clamp(260px, 22vw, 320px), 1fr));
+    }}
+    .hero {{
+      grid-template-columns: 1.4fr 1fr 1.2fr 1.2fr 1fr;
+    }}
+    .factors {{
+      grid-template-columns: repeat(2, 1fr);
+    }}
+  }}
+
 </style>
 </head>
 <body>
