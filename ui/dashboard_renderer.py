@@ -1387,13 +1387,7 @@ function downloadPDF() {{
     jsPDF:        {{ unit: 'mm', format: 'a4', orientation: 'portrait' }}
   }};
   
-  html2pdf().set(opt).from(element).output('datauristring').then(function(pdfDataUri) {{
-    const base64 = pdfDataUri.split(',')[1];
-    window.parent.postMessage({{
-      type: 'download_pdf',
-      base64: base64,
-      filename: opt.filename
-    }}, '*');
+  html2pdf().set(opt).from(element).save().then(function() {{
     btn.innerHTML = originalHTML;
     btn.disabled = false;
   }}).catch(function(err) {{

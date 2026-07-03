@@ -35,42 +35,6 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# 透過隱藏的 iframe 元件為父視窗 window.parent 註冊跨域 PDF 下載事件監聽器
-components.html("""
-<script>
-    if (!window.parent.__message_listener_added) {
-        window.parent.__message_listener_added = true;
-        console.log('[Parent] Registering download_pdf message listener...');
-        window.parent.addEventListener('message', function(event) {
-            if (event.data && event.data.type === 'download_pdf') {
-                console.log('[Parent] Received download_pdf base64 message, trigger download...');
-                try {
-                    var base64 = event.data.base64;
-                    var filename = event.data.filename;
-                    
-                    var byteCharacters = atob(base64);
-                    var byteNumbers = new Array(byteCharacters.length);
-                    for (var i = 0; i < byteCharacters.length; i++) {
-                        byteNumbers[i] = byteCharacters.charCodeAt(i);
-                    }
-                    var byteArray = new Uint8Array(byteNumbers);
-                    var blob = new Blob([byteArray], {type: 'application/pdf'});
-                    
-                    var link = window.parent.document.createElement('a');
-                    link.href = window.parent.URL.createObjectURL(blob);
-                    link.download = filename;
-                    window.parent.document.body.appendChild(link);
-                    link.click();
-                    window.parent.document.body.removeChild(link);
-                    console.log('[Parent] PDF downloaded successfully');
-                } catch (err) {
-                    console.error('[Parent] Failed to download PDF:', err);
-                }
-            }
-        });
-    }
-</script>
-""", height=0)
 
 # --- Sidebar: API 設定與控制面板 ---
 is_windows = sys.platform == "win32"
@@ -160,7 +124,7 @@ if os.path.exists(html_file_path):
 else:
     should_auto_trigger = True
 
-if is_windows and should_auto_trigger and not is_running:
+if should_auto_trigger and not is_running:
     env = os.environ.copy()
     env["YUANTA_ACCOUNT"] = account
     env["YUANTA_PASSWORD"] = password
