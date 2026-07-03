@@ -323,11 +323,6 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
     height: 100%;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
   }}
-  .hero-card.main {{
-    background: linear-gradient(135deg, var(--card-bg), rgba(79, 70, 229, 0.03));
-    border: 1px solid rgba(79, 70, 229, 0.2);
-    grid-column: 1 / -1;
-  }}
   .hc-label {{
     font-size: clamp(0.85rem, 1vw, 1.1rem);
     font-weight: 700;
@@ -840,12 +835,12 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
 
   <!-- Hero Row -->
   <div class="hero">
-    <div class="hero-card main">
+    <div class="hero-card">
       <div class="hc-label">開盤預測</div>
       <div class="hc-val {dir_cls}">{dir_arrow} {open_pred}</div>
       <div class="hc-sub">預測區間<br>{pt_low:+d} ～ {pt_high:+d} 點區間</div>
     </div>
-    <div class="hero-card main">
+    <div class="hero-card">
       <div class="hc-label">趨勢結構</div>
       <div class="hc-val" style="color:var(--text-primary);">{sentiment}</div>
       <div class="hc-sub">{today}</div>
