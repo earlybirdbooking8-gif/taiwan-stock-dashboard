@@ -100,7 +100,7 @@ def build_html(market_data: dict, ai_result: dict, notion_url: str | None = None
             
         return val_str, sub_str, tooltip
 
-    txf_val, txf_sub, txf_tip = get_metric_html(txf_pm, "台指期盤後收盤 (TXFPM1)", "FinMind 金融數據 API", "TaiwanFuturesDaily", "三竹股市 / 台灣期交所官網", decimals=0)
+    txf_val, txf_sub, txf_tip = get_metric_html(txf_pm, "台指期盤後收盤 (TXFPM1)", "元大 API / 玩股網", "Yuanta/WantGoo", "三竹股市 / 台灣期交所官網", decimals=0)
     adr_val, adr_sub, adr_tip = get_metric_html(adr, "台積電 ADR (TSM)", "Yahoo Finance 國際市場", "yfinance (TSM)", "富途牛牛 / 紐約證交所官網", decimals=2, is_currency=True)
     sox_val, sox_sub, sox_tip = get_metric_html(sox, "SOX 費城半導體", "Yahoo Finance 國際市場", "yfinance (^SOX)", "英為財情 Investing.com", decimals=0)
     nq_val, nq_sub, nq_tip = get_metric_html(nq, "NASDAQ 指數", "Yahoo Finance 國際市場", "yfinance (^IXIC)", "Bloomberg 國際版", decimals=0)
